@@ -48,7 +48,7 @@ include "../koneksi.php";
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
       <a href="index.php" class="logo d-flex align-items-center">
-        <img src="assets/img/logo.png" alt="">
+        <img src="assets/img/bg.png" alt="" class="img-fluid" style="width: 70px;">
         <span>E </span>
         <span>Perpus</span>
       </a>
@@ -98,7 +98,7 @@ include "../koneksi.php";
           </div>
         </div>
         <div class="col-lg-6 hero-img" data-aos="zoom-out" data-aos-delay="200">
-          <img src="assets/img/hero-img.png" class="img-fluid" alt="">
+          <img src="assets/img/hero.png" class="img-fluid" alt="">
         </div>
       </div>
     </div>
@@ -132,7 +132,7 @@ include "../koneksi.php";
           </div>
 
           <div class="col-lg-6 d-flex align-items-center" data-aos="zoom-out" data-aos-delay="200">
-            <img src="assets/img/about.jpg" class="img-fluid" alt="">
+            <img src="assets/img/download.png" class="img-fluid" alt="">
           </div>
 
         </div>
@@ -198,7 +198,7 @@ include "../koneksi.php";
                   <div class="info-box">
                     <i class="bi bi-geo-alt"></i>
                     <h3>Address</h3>
-                    <p>A108 Adam Street,<br>New York, NY 535022</p>
+                    <p>Jalan di ponegoro<br>no 74 Trenggalek</p>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -212,7 +212,7 @@ include "../koneksi.php";
                   <div class="info-box">
                     <i class="bi bi-envelope"></i>
                     <h3>Email Us</h3>
-                    <p>info@example.com<br>contact@example.com</p>
+                    <p>alvintop11@gmail.com<br>alvinahmd1@gmail.com</p>
                   </div>
                 </div>
                 <div class="col-md-6">
