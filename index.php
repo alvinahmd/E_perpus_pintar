@@ -9,7 +9,6 @@ if (!isset($_SESSION['user'])) {
 <html lang="en">
 
 <head>
-    <!-- <img src="../images/<?php echo $data['image']; ?>" alt="Relativitas" class="object-cover w-full"> -->
 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

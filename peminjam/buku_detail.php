@@ -144,7 +144,7 @@ include "../koneksi.php";
               </p>
             </div>
             <?php
-            if ($_SESSION['user']['level'] != 'admin' && ($_SESSION['user']['level'] != 'petugas')) {
+            if (isset($_SESSION['user']) && ($_SESSION['user']['level'] != 'admin' && $_SESSION['user']['level'] != 'petugas')) {
               ?>
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Pinjam Buku
