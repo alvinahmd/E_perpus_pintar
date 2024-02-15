@@ -118,6 +118,54 @@
                     </div>
                 </div>
             </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total buku di kembalikan
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            <?php
+                                            echo mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM peminjaman WHERE status_peminjaman='Dikembalikan'"));
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-book fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-info shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Total buku di Pinjam
+                                </div>
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col-auto">
+                                        <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                            <?php
+                                            echo mysqli_num_rows(mysqli_query($koneksi, "SELECT * FROM peminjaman WHERE status_peminjaman='Dipinjam'"));
+                                            ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-book fa-2x"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <!-- ulasan -->
             <?php
         } else {
@@ -128,10 +176,17 @@
                         <div class="row no-gutters align-items-center">
                             <div class="col mr-2">
                                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                    Total Buku</div>
+                                    Total peminjaman Buku</div>
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                                     <?php
-                                    echo mysqli_num_rows(mysqli_query($koneksi, "SELECT*FROM buku"));
+                                    $id_user_login = $_SESSION['user']['id_user'];
+
+                                    $query = "SELECT * FROM peminjaman 
+                                            WHERE id_user = '$id_user_login'";
+                                    $result = mysqli_query($koneksi, $query);
+
+                                    // Tampilkan jumlah ulasan berdasarkan user yang login
+                                    echo mysqli_num_rows($result);
                                     ?>
                                 </div>
                             </div>
@@ -157,7 +212,14 @@
                                     <div class="col-auto">
                                         <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
                                             <?php
-                                            echo mysqli_num_rows(mysqli_query($koneksi, "SELECT*FROM ulasan"));
+                                            $id_user_login = $_SESSION['user']['id_user'];
+
+                                            $query = "SELECT * FROM ulasan 
+                                            WHERE id_user = '$id_user_login'";
+                                            $result = mysqli_query($koneksi, $query);
+
+                                            // Tampilkan jumlah ulasan berdasarkan user yang login
+                                            echo mysqli_num_rows($result);
                                             ?>
                                         </div>
                                     </div>
@@ -204,6 +266,11 @@
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
+                            <?php
+                            // Contoh penggunaan
+                            $data = array('status_peminjaman' => 'dipinjam'); // Ganti dengan data sesuai kebutuhan
+                            $status_peminjaman = $data['status_peminjaman'];
+                            ?>
                             <tr>
                                 <th>No</th>
                                 <th>User</th>
@@ -211,6 +278,7 @@
                                 <th>Tanggal Peminjaman</th>
                                 <th>Tanggal pengembalian</th>
                                 <th>Status Peminjaman</th>
+
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -230,7 +298,7 @@
                             $i = 1;
                             $query = mysqli_query($koneksi, "SELECT * FROM peminjaman 
     LEFT JOIN user ON user.id_user = peminjaman.id_user 
-    LEFT JOIN buku ON buku.id_buku = peminjaman.id_buku");
+    LEFT JOIN buku ON buku.id_buku = peminjaman.id_buku ORDER BY id_peminjaman DESC");
 
                             while ($data = mysqli_fetch_array($query)) {
                                 ?>
@@ -238,7 +306,7 @@
                                     <td>
                                         <?php echo $i++; ?>
                                     </td>
-                                    <td>
+                                    <td class="col-2">
                                         <?php echo $data['nama']; ?>
                                     </td>
                                     <td>
@@ -253,12 +321,12 @@
                                     <td>
                                         <?php echo $data['status_peminjaman']; ?>
                                     </td>
-                                    <td>
+                                    <td class="col-3">
                                         <?php
                                         if ($data['status_peminjaman'] != 'dikembalikan') {
                                             ?>
                                             <a href="?page=peminjaman_ubah&&id=<?php echo $data['id_peminjaman']; ?>"
-                                                class="btn btn-info">Ubah</a>
+                                                class="btn btn-info">Kembali</a>
                                             <a onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini ??')"
                                                 href="?page=peminjaman_hapus&&id=<?php echo $data['id_kategori']; ?>"
                                                 class="btn btn-danger">Hapus</a>
@@ -297,11 +365,8 @@
                 <li class="list-group-item">Username :
                     <?php echo $_SESSION['user']['username'] ?>
                 </li>
-                <li class="list-group-item">Username :
+                <li class="list-group-item">Alamat :
                     <?php echo $_SESSION['user']['alamat'] ?>
-                </li>
-                <li class="list-group-item">Level :
-                    <?php echo $_SESSION['user']['level'] ?>
                 </li>
             </ul>
         </div>

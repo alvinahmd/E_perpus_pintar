@@ -15,10 +15,12 @@ include "koneksi.php";
   <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
 <!--Bootsrap 4 CDN-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+  integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
 <!--Fontawesome CDN-->
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+  integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -54,29 +56,52 @@ include "koneksi.php";
                   }
                   ?>
                   <form method="post">
-                    <div class="form-group">
-                      <label class="small mb-1">Nama</label>
-                      <input class="form-control" type="text" name="nama" required placeholder="Masukkan Nama" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      </div>
+                      <input type="text" id="inputNama" class="form-control" name="nama"
+                        placeholder="masukkan name anda">
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1">Username</label>
-                      <input class="form-control" type="username" name="username" required placeholder="Masukkan Username" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      </div>
+                      <input type="text" id="inputUsername" class="form-control" name="username"
+                        placeholder="masukkan username anda">
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1">Email</label>
-                      <input class="form-control" type="text" name="email" required placeholder="Masukkan Email" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input type="text" id="inputemail" class="form-control" name="email"
+                        placeholder="masukkan email anda">
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1">No. Telepon</label>
-                      <input class="form-control" type="text" name="no_telepon" required placeholder="Masukkan No. Telepon" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="text" id="inputno_telepon" class="form-control" name="no_telepon"
+                        placeholder="masukkan no_telepon anda">
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1">Alamat</label>
-                      <textarea name="alamat" rows="5" required class="form-control"></textarea>
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-location-dot"></i></span>
+                      </div>
+                      <textarea type="text" id="inputalamat" class="form-control" name="alamat"
+                        placeholder="masukkan alamat anda"></textarea>
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1" id="inputPassword">Password</label>
-                      <input class="form-control" id="inputPassword" type="password" name="password" required placeholder="Masukkan Password" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                      </div>
+                      <input type="password" class="form-control" id="inputPassword" name="password"
+                        placeholder="masukkan password anda">
                     </div>
                     <!-- <div class="form-group">
                       <label class="small mb-1">Level</label>
@@ -86,7 +111,8 @@ include "koneksi.php";
                       </select>
                     </div> -->
                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                      <button class="btn btn-primary" type="submit" name="register" value="register">Register</button>
+                      <button class="btn btn-primary login_btn" type="submit" name="register"
+                        value="register">Register</button>
                       <a class="btn btn-danger" href="login.php">Login</a>
                     </div>
                   </form>
@@ -98,9 +124,90 @@ include "koneksi.php";
       </main>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"></script>
   <script src="js/scripts.js"></script>
-   
+
 </body>
 
 </html>
+<style>
+  /* Made with love by Mutiullah Samim*/
+
+  @import url('https://fonts.googleapis.com/css?family=Numans');
+
+  html,
+  body {
+    background-image: url('img/perpustakaanBG.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+  }
+
+  .container {
+    height: 100%;
+    align-content: center;
+  }
+
+  .card {
+    height: 550px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+  }
+
+  .social_icon span {
+    font-size: 60px;
+    margin-left: 10px;
+    color: #FFC312;
+  }
+
+  .social_icon span:hover {
+    color: white;
+    cursor: pointer;
+  }
+
+  .card-header h3 {
+    color: white;
+  }
+
+  .input-group-prepend span {
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border: 0 !important;
+  }
+
+  .input-group form-group {
+    width: 50px;
+  }
+
+  input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+
+  }
+
+
+  .login_btn {
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
+    height: 40px;
+  }
+
+  .login_btn:hover {
+    color: black;
+    background-color: white;
+  }
+
+  .links {
+    color: white;
+  }
+
+  .links a {
+    margin-left: 4px;
+  }
+</style>

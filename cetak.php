@@ -31,7 +31,7 @@ include "koneksi.php"
           $i = 1;
           $query = mysqli_query($koneksi, "SELECT * FROM peminjaman 
   LEFT JOIN user ON user.id_user = peminjaman.id_user 
-  LEFT JOIN buku ON buku.id_buku = peminjaman.id_buku");
+  LEFT JOIN buku ON buku.id_buku = peminjaman.id_buku ORDER BY id_peminjaman DESC");
           while ($data = mysqli_fetch_array($query)) {
             ?>
             <tr>

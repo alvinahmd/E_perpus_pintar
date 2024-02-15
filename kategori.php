@@ -34,7 +34,7 @@
           <tbody>
             <?php
             $i = 1;
-            $query = mysqli_query($koneksi, "SELECT*FROM kategori");
+            $query = mysqli_query($koneksi, "SELECT*FROM kategori ORDER BY id_kategori DESC");
             while ($data = mysqli_fetch_array($query)) {
               ?>
               <tr>

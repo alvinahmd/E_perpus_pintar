@@ -7,13 +7,17 @@
           <form action="" method="post">
             <?php
             $id = $_GET['id'];
-            if(isset($_POST['submit'])){
+            if (isset($_POST['submit'])) {
               $kategori = $_POST['kategori'];
               $query = mysqli_query($koneksi, "UPDATE kategori SET kategori='$kategori' WHERE id_kategori=$id");
-              if($query){
-                echo '<script>alert("Ubah Kategori berhasil.");</script>';
-              }else{
-                echo '<script>alert("Ubah Kategori gagal.");</script>';
+              if ($query) {
+                echo '<div class="alert alert-success" role="alert">
+                        Kategori  berhasil di ubah.
+                      </div>';
+              } else {
+                echo '<div class="alert alert-danger" role="alert">
+                        kategori Gagal di ubah
+                      </div>';
               }
             }
             $query = mysqli_query($koneksi, "SELECT*FROM kategori WHERE id_kategori=$id");
@@ -27,14 +31,14 @@
             </div>
             <div class="row">
               <div class="col-md-2"></div>
-                  <div class="py-3">
-                    <button type="submit" class="btn btn-primary " name="submit" value="submit">Simpan</button>
-                  <a href="?page=kategori" class="btn btn-danger">Kembali</a>
-                </div>
+              <div class="py-3">
+                <button type="submit" class="btn btn-primary " name="submit" value="submit">Simpan</button>
+                <a href="?page=kategori" class="btn btn-danger">Kembali</a>
               </div>
             </div>
-          </form>
         </div>
+        </form>
       </div>
     </div>
+  </div>
 </div>

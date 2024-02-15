@@ -6,13 +6,17 @@
         <div class="col-md-12">
           <form action="" method="post">
             <?php
-            if(isset($_POST['submit'])){
+            if (isset($_POST['submit'])) {
               $kategori = $_POST['kategori'];
               $query = mysqli_query($koneksi, "INSERT INTO kategori(kategori) Values('$kategori')");
-              if($query){
-                echo '<script>alert("tambah data berhasil.");</script>';
-              }else{
-                echo '<script>alert("tambah data gagal.");</script>';
+              if ($query) {
+                echo '<div class="alert alert-success" role="alert">
+                        Kategori  berhasil ditambahkan.
+                      </div>';
+              } else {
+                echo '<div class="alert alert-danger" role="alert">
+                        kategori Gagal di tambahkan
+                      </div>';
               }
             }
             ?>
@@ -24,15 +28,15 @@
             </div>
             <div class="row">
               <div class="col-md-2"></div>
-                  <div class="py-3">
-                    <button type="submit" class="btn btn-primary " name="submit" value="submit">Simpan</button>
-                  <button type="submit" class="btn btn-secondary" name="reset">Reset</button>
-                  <a href="?page=kategori" class="btn btn-danger">Kembali</a>
-                </div>
+              <div class="py-3">
+                <button type="submit" class="btn btn-primary " name="submit" value="submit">Simpan</button>
+                <button type="submit" class="btn btn-secondary" name="reset">Reset</button>
+                <a href="?page=kategori" class="btn btn-danger">Kembali</a>
               </div>
             </div>
-          </form>
         </div>
+        </form>
       </div>
     </div>
+  </div>
 </div>

@@ -9,40 +9,44 @@
             $id = $_GET['id'];
             if (isset($_POST['submit'])) {
               $id_kategori = $_POST['id_kategori'];
-               //soal gambar
-              $allowed_extension = array('png','jpg');
+              //soal gambar
+              $allowed_extension = array('png', 'jpg');
               $nama = $_FILES['file']['name']; // ngambil nama gambar
               $dot = explode('.', $nama);
-              $ekstensi = strtolower(end($dot));//ngambil ekstrensi
-              $ukuran = $_FILES['file']['size'];//ngambil size file
+              $ekstensi = strtolower(end($dot)); //ngambil ekstrensi
+              $ukuran = $_FILES['file']['size']; //ngambil size file
               $file_tmp = $_FILES['file']['tmp_name']; //ngambil lokasi file
               //penamaan file -> enskripsi
               $image = md5(uniqid($nama, true) . time()) . '.' . $ekstensi; //menggabungkan nama file yang dienskripsi dengan ekstensi
-
+            
               $judul = $_POST['judul'];
               $penulis = $_POST['penulis'];
               $penerbit = $_POST['penerbit'];
               $tahun_terbit = $_POST['tahun_terbit'];
               $deskripsi = $_POST['deskripsi'];
-              
-              if($ukuran==0){
+
+              if ($ukuran == 0) {
                 //jika tidak ingin upload
                 $query = mysqli_query($koneksi, "UPDATE buku SET id_kategori='$id_kategori', judul='$judul', penulis='$penulis', penerbit='$penerbit', tahun_terbit='$tahun_terbit',  deskripsi='$deskripsi' WHERE id_buku=$id");
-              if ($query) { 
-                echo '<script>alert("Buku berhasil Di ubah.");</script>';
+                if ($query) {
+                  echo '<div class="alert alert-success" role="alert">
+                          Buku  berhasil di ubah.
+                        </div>';
+                } else {
+                  echo '<div class="alert alert-danger" role="alert">
+                          Buku Gagal di ubah
+                        </div>';
+                }
               } else {
-                echo '<script>alert("buku gagal Di ubah.");</script>';
-              }
-              }else{
                 //jika ingin upload 
                 $query = mysqli_query($koneksi, "UPDATE buku SET id_kategori='$id_kategori', image='$image', judul='$judul', penulis='$penulis', penerbit='$penerbit', tahun_terbit='$tahun_terbit',  deskripsi='$deskripsi' WHERE id_buku=$id");
-              if ($query) { 
-                move_uploaded_file($file_tmp, 'images/' . $image);
+                if ($query) {
+                  move_uploaded_file($file_tmp, 'images/' . $image);
 
-                echo '<script>alert("Buku berhasil Di ubah.");</script>';
-              } else {
-                echo '<script>alert("buku gagal Di ubah.");</script>';
-              }
+                  echo '<script>alert("Buku berhasil Di ubah.");</script>';
+                } else {
+                  echo '<script>alert("buku gagal Di ubah.");</script>';
+                }
               }
             }
             $query = mysqli_query($koneksi, "SELECT*FROM buku WHERE id_buku=$id");
@@ -67,11 +71,11 @@
               </div>
             </div>
             <div class="row mb-3">
-                    <div class="col-md-2">Cover</div>
-                    <div class="col-md-8">
-                      <input value="<?php echo $data['image']; ?>" type="file" class="form-control" name="file">
-                    </div>
-                  </div>
+              <div class="col-md-2">Cover</div>
+              <div class="col-md-8">
+                <input value="<?php echo $data['image']; ?>" type="file" class="form-control" name="file">
+              </div>
+            </div>
             <div class="row mb-3">
               <div class="col-md-2">JUDUL</div>
               <div class="col-md-8">

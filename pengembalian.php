@@ -35,9 +35,13 @@
 
 
               if ($query && $kembalikan_stock) {
-                echo '<script>alert("pengembalian buku berhasil.");</script>';
+                echo '<div class="alert alert-success" role="alert">
+                Pengembalian buku berhasil
+              </div>';
               } else {
-                echo '<script>alert("pengembalian buku gagal.");</script>';
+                echo '<div class="alert alert-danger" role="alert">
+                Pengembalian buku gagal
+              </div>';
               }
             }
             $query = mysqli_query($koneksi, "SELECT*FROM peminjaman WHERE id_peminjaman=$id");

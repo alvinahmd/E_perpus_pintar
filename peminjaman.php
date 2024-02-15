@@ -30,7 +30,7 @@
               <th>Tanggal Peminjaman</th>
               <th>Tanggal pengembalian</th>
               <th>Status Peminjaman</th>
-              <th>Aksi</th>
+              <!-- <th>Aksi</th> -->
             </tr>
           </thead>
           <tfoot>
@@ -42,7 +42,7 @@
               <th>Tanggal Peminjaman</th>
               <th>Tanggal pengembalian</th>
               <th>Status Peminjaman</th>
-              <th>Aksi</th>
+              <!-- <th>Aksi</th> -->
             </tr>
           </tfoot>
           <tbody>
@@ -52,7 +52,8 @@
             $query = mysqli_query($koneksi, "SELECT * FROM peminjaman 
                         LEFT JOIN user ON user.id_user = peminjaman.id_user 
                         LEFT JOIN buku ON buku.id_buku = peminjaman.id_buku
-                        WHERE peminjaman.id_user = $id_user");
+                        WHERE peminjaman.id_user = $id_user ORDER BY id_peminjaman DESC");
+
 
             while ($data = mysqli_fetch_array($query)) {
               ?>
@@ -78,15 +79,15 @@
                 <td>
                   <?php echo $data['status_peminjaman']; ?>
                 </td>
-                <td>
-                  <?php
-                  if ($data['status_peminjaman'] != 'dikembalikan') {
-                    ?>
-                    <a href="?page=pengembalian&&id=<?php echo $data['id_peminjaman']; ?>" class="btn btn-info">Simpan</a>
-                    <?php
-                  }
+                <!-- <td> -->
+                <?php
+                if ($data['status_peminjaman'] != 'dikembalikan') {
                   ?>
-                </td>
+                  <!-- <a href="?page=pengembalian&&id=<?php echo $data['id_peminjaman']; ?>" class="btn btn-info">Kembali</a> -->
+                  <?php
+                }
+                ?>
+                <!-- </td> -->
               </tr>
               <?php
             }

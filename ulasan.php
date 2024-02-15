@@ -14,9 +14,6 @@
   <div class="card shadow mb-4">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary py-3">Data Ulasan </h6>
-
-
-
     </div>
     <div class="card-body">
       <div class="table-responsive">
@@ -44,18 +41,21 @@
             if ($level_user == 'peminjam') {
               // Jika level pengguna adalah 'peminjam', tampilkan ulasan berdasarkan user yang sedang login
               $query = "SELECT * FROM ulasan 
-              LEFT JOIN user ON user.id_user = ulasan.id_user 
-              LEFT JOIN buku ON buku.id_buku = ulasan.id_buku
-              WHERE ulasan.id_user = '$id_user'";
+                        LEFT JOIN user ON user.id_user = ulasan.id_user 
+                        LEFT JOIN buku ON buku.id_buku = ulasan.id_buku
+                        WHERE ulasan.id_user = '$id_user'
+                        ORDER BY id_ulasan DESC";
             } elseif ($level_user == 'petugas' || $level_user == 'admin') {
               // Jika level pengguna adalah 'admin', tampilkan semua ulasan
               $query = "SELECT * FROM ulasan 
-              LEFT JOIN user ON user.id_user = ulasan.id_user 
-              LEFT JOIN buku ON buku.id_buku = ulasan.id_buku";
+                        LEFT JOIN user ON user.id_user = ulasan.id_user 
+                        LEFT JOIN buku ON buku.id_buku = ulasan.id_buku 
+                        ORDER BY id_ulasan DESC";
             } else {
               // Tambahkan logika lain sesuai kebutuhan
               echo "Level pengguna tidak valid";
             }
+
 
             if ($query != "") {
               // Eksekusi query dan tampilkan hasil
@@ -77,8 +77,16 @@
                   <td>
                     <?php echo $data['ulasan']; ?>
                   </td>
-                  <td>
-                    <?php echo $data['rating']; ?>
+                  <td style="color:orange">
+                    <?php
+                    $rating = $data['rating'];
+
+                    // Loop untuk menampilkan ikon bintang sesuai dengan nilai rating
+                    for ($i = 1; $i <= 10; $i++) {
+                      $iconClass = ($i <= $rating) ? 'fas fa-star' : 'far fa-star';
+                      echo '<i class="' . $iconClass . '"></i>';
+                    }
+                    ?>
                   </td>
                   <td>
                     <?php
@@ -128,6 +136,3 @@
       <script src="vendor/datatables/jquery.dataTables.min.js"></script>
       <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
-        <script src="js/demo/datatables-demo.js"></script>
-
-      // < !--Page level custom scripts-->

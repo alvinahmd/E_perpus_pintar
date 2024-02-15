@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 
   <style>
-    .zoom{
+    .zoom {
       width: 100px;
     }
   </style>
@@ -38,21 +38,21 @@
                 <th>Penulis</th>
                 <th>Penerbit</th>
                 <th>Tahun Terbit</th>
-                <th >Deskripsi</th>
+                <th>Deskripsi</th>
                 <th class="col-8">Aksi</th>
               </tr>
             </thead>
             <tbody>
               <?php
               $i = 1;
-              $query = mysqli_query($koneksi, "SELECT*FROM buku LEFT JOIN kategori on buku.id_kategori = kategori.id_kategori");
+              $query = mysqli_query($koneksi, "SELECT*FROM buku LEFT JOIN kategori on buku.id_kategori = kategori.id_kategori ORDER BY id_buku DESC");
               while ($data = mysqli_fetch_array($query)) {
-                $gambar = $data['image'];//ambil gambar
-                if($gambar==null){
+                $gambar = $data['image']; //ambil gambar
+                if ($gambar == null) {
                   //jika gambar tidak ada 
                   $image = 'NO POTO';
-                }else{
-                  $image = '<img src="images/'.$gambar.'" class="zoom">';
+                } else {
+                  $image = '<img src="images/' . $gambar . '" class="zoom">';
                 }
                 ?>
                 <tr>
@@ -104,46 +104,46 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
-                <form action="" method="post"  enctype="multipart/form-data">
+                <form action="" method="post" enctype="multipart/form-data">
                   <?php
-                 if (isset($_POST['submit'])) {
-                  $id_kategori = $_POST['id_kategori'];
-                  //soal gambar
-                  $allowed_extension = array('png','jpg');
-                  $nama = $_FILES['file']['name']; // ngambil nama gambar
-                  $dot = explode('.', $nama);
-                  $ekstensi = strtolower(end($dot));//ngambil ekstrensi
-                  $ukuran = $_FILES['file']['size'];//ngambil size file
-                  $file_tmp = $_FILES['file']['tmp_name']; //ngambil lokasi file
-                  //penamaan file -> enskripsi
-                  $image = md5(uniqid($nama, true) . time()) . '.' . $ekstensi; //menggabungkan nama file yang dienskripsi dengan ekstensi
-              
-                  $judul = $_POST['judul'];
-                  $penulis = $_POST['penulis'];
-                  $penerbit = $_POST['penerbit'];
-                  $tahun_terbit = $_POST['tahun_terbit'];
-                  $stock_buku = $_POST['stock'];
-                  $deskripsi = $_POST['deskripsi'];
-                  $query = mysqli_query($koneksi, "INSERT INTO buku (id_kategori, image, judul, penulis, penerbit, tahun_terbit, stock, deskripsi) VALUES ('$id_kategori', '$image', '$judul', '$penulis', '$penerbit', '$tahun_terbit', '$stock_buku', '$deskripsi')");
+                  if (isset($_POST['submit'])) {
+                    $id_kategori = $_POST['id_kategori'];
+                    //soal gambar
+                    $allowed_extension = array('png', 'jpg');
+                    $nama = $_FILES['file']['name']; // ngambil nama gambar
+                    $dot = explode('.', $nama);
+                    $ekstensi = strtolower(end($dot)); //ngambil ekstrensi
+                    $ukuran = $_FILES['file']['size']; //ngambil size file
+                    $file_tmp = $_FILES['file']['tmp_name']; //ngambil lokasi file
+                    //penamaan file -> enskripsi
+                    $image = md5(uniqid($nama, true) . time()) . '.' . $ekstensi; //menggabungkan nama file yang dienskripsi dengan ekstensi
                   
-                  if ($query) {
+                    $judul = $_POST['judul'];
+                    $penulis = $_POST['penulis'];
+                    $penerbit = $_POST['penerbit'];
+                    $tahun_terbit = $_POST['tahun_terbit'];
+                    $stock_buku = $_POST['stock'];
+                    $deskripsi = $_POST['deskripsi'];
+                    $query = mysqli_query($koneksi, "INSERT INTO buku (id_kategori, image, judul, penulis, penerbit, tahun_terbit, stock, deskripsi) VALUES ('$id_kategori', '$image', '$judul', '$penulis', '$penerbit', '$tahun_terbit', '$stock_buku', '$deskripsi')");
+
+                    if ($query) {
                       // Proses pengunggahan file
                       if (in_array($ekstensi, $allowed_extension)) {
-                          // Validasi ukuran file
-                          if ($ukuran < 1500000) {
-                              // Pindahkan file yang diunggah
-                              move_uploaded_file($file_tmp, 'images/' . $image);
-                              echo '<script>alert("tambah data berhasil.");</script>';
-                          } else {
-                              echo '<div class="error-message">Ukuran file melebihi batas (1.5 MB).</div>';
-                          }
+                        // Validasi ukuran file
+                        if ($ukuran < 1500000) {
+                          // Pindahkan file yang diunggah
+                          move_uploaded_file($file_tmp, 'images/' . $image);
+                          echo '<script>alert("tambah data berhasil.");</script>';
+                        } else {
+                          echo '<div class="error-message">Ukuran file melebihi batas (1.5 MB).</div>';
+                        }
                       } else {
-                          echo '<div class="error-message">Tipe file tidak valid. Hanya PNG dan JPG yang diizinkan.</div>';
+                        echo '<div class="error-message">Tipe file tidak valid. Hanya PNG dan JPG yang diizinkan.</div>';
                       }
-                  } else {
-                    echo '<script>alert("tambah data gagal.");</script>';
+                    } else {
+                      echo '<script>alert("tambah data gagal.");</script>';
+                    }
                   }
-              }
                   ?>
                   <div class="row mb-3">
                     <div class="col-md-4">Kategori</div>

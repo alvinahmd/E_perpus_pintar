@@ -34,7 +34,7 @@
             <tbody>
               <?php
               $i = 1;
-              $query = mysqli_query($koneksi, "SELECT*FROM buku ");
+              $query = mysqli_query($koneksi, "SELECT*FROM buku ORDER BY id_buku DESC ");
               while ($data = mysqli_fetch_array($query)) {
                 ?>
                 <tr>

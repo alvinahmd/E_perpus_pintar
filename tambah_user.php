@@ -34,7 +34,7 @@ include "koneksi.php";
             <div class="col-lg-5">
               <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="card-header">
-                  <h3 class="text-center font-weight-light my-4">Tambah User</h3>
+                  <h3 class="text-center font-weight-light my-4">Register</h3>
                 </div>
                 <div class="card-body">
                   <?php
@@ -49,50 +49,73 @@ include "koneksi.php";
 
                     $insert = mysqli_query($koneksi, "INSERT INTO user(nama, email, alamat, no_telepon, username, password,level)VALUES('$nama','$email','$alamat','$no_telepon','$username','$password','$level')");
                     if ($insert) {
-                      echo '<script>alert("Selamat, register berhasil. Silahkan Login"); location.href="index.php"</script>';
+                      echo '<script>alert("Tambah User Berhasil"); location.href="index.php"</script>';
                     } else {
-                      echo '<script>alert("Register gagal, silahkan ulangi kembali");</script>';
+                      echo '<script>alert("Tambah User gagal");</script>';
                     }
                   }
                   ?>
                   <form method="post">
-                    <div class="form-group">
-                      <label class="small mb-1">Nama</label>
-                      <input class="form-control" type="text" name="nama" required placeholder="Masukkan Nama" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      </div>
+                      <input type="text" id="inputNama" class="form-control" name="nama"
+                        placeholder="masukkan name anda">
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1">Username</label>
-                      <input class="form-control" type="username" name="username" required
-                        placeholder="Masukkan Username" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                      </div>
+                      <input type="text" id="inputUsername" class="form-control" name="username"
+                        placeholder="masukkan username anda">
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1">Email</label>
-                      <input class="form-control" type="text" name="email" required placeholder="Masukkan Email" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                      </div>
+                      <input type="text" id="inputemail" class="form-control" name="email"
+                        placeholder="masukkan email anda">
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1">No. Telepon</label>
-                      <input class="form-control" type="text" name="no_telepon" required
-                        placeholder="Masukkan No. Telepon" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                      </div>
+                      <input type="text" id="inputno_telepon" class="form-control" name="no_telepon"
+                        placeholder="masukkan no_telepon anda">
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1">Alamat</label>
-                      <textarea name="alamat" rows="5" required class="form-control"></textarea>
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-location-dot"></i></span>
+                      </div>
+                      <textarea type="text" id="inputalamat" class="form-control" name="alamat"
+                        placeholder="masukkan alamat anda"></textarea>
+
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1" id="inputPassword">Password</label>
-                      <input class="form-control" id="inputPassword" type="password" name="password" required
-                        placeholder="Masukkan Password" />
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                      </div>
+                      <input type="password" class="form-control" id="inputPassword" name="password"
+                        placeholder="masukkan password anda">
                     </div>
-                    <div class="form-group">
-                      <label class="small mb-1">Level</label>
+                    <div class="input-group form-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"></span>
+                      </div>
                       <select name="level" dis class="form-select form-control">
                         <option value="peminjam">Peminjam</option>
-                        <option value="admin">Petugas</option>
+                        <option value="admin">Admin</option>
                       </select>
                     </div>
                     <div class="form-group d-flex align-items-center justify-content-between mt-4 mb-0">
-                      <button class="btn btn-primary" type="submit" name="register" value="register">Tambah User</button>
-                      <a class="btn btn-danger" href="index.php">Kembali</a>
+                      <button class="btn btn-primary login_btn" type="submit" name="register"
+                        value="register">Register</button>
+                      <a class="btn btn-danger" href="index.php">Back</a>
                     </div>
                   </form>
                 </div>
@@ -110,3 +133,83 @@ include "koneksi.php";
 </body>
 
 </html>
+<style>
+  /* Made with love by Mutiullah Samim*/
+
+  @import url('https://fonts.googleapis.com/css?family=Numans');
+
+  html,
+  body {
+    background-image: url('img/perpustakaanBG.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    font-family: 'Numans', sans-serif;
+  }
+
+  .container {
+    height: 100%;
+    align-content: center;
+  }
+
+  .card {
+    height: 592px;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 400px;
+    background-color: rgba(0, 0, 0, 0.7) !important;
+  }
+
+  .social_icon span {
+    font-size: 60px;
+    margin-left: 10px;
+    color: #FFC312;
+  }
+
+  .social_icon span:hover {
+    color: white;
+    cursor: pointer;
+  }
+
+  .card-header h3 {
+    color: white;
+  }
+
+  .input-group-prepend span {
+    width: 50px;
+    background-color: #FFC312;
+    color: black;
+    border: 0 !important;
+  }
+
+  .input-group form-group {
+    width: 50px;
+  }
+
+  input:focus {
+    outline: 0 0 0 0 !important;
+    box-shadow: 0 0 0 0 !important;
+
+  }
+
+
+  .login_btn {
+    color: black;
+    background-color: #FFC312;
+    width: 100px;
+    height: 40px;
+  }
+
+  .login_btn:hover {
+    color: black;
+    background-color: white;
+  }
+
+  .links {
+    color: white;
+  }
+
+  .links a {
+    margin-left: 4px;
+  }
+</style>

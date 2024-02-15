@@ -20,6 +20,10 @@ include "../koneksi.php";
   <link
     href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
     rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
@@ -193,7 +197,7 @@ include "../koneksi.php";
                 $kurangi_stock = mysqli_query($koneksi, "UPDATE buku SET stock='$new_stock' where id_buku='$id_buku'");
 
                 if ($query && $kurangi_stock) {
-                  echo '<script>alert("peminjaman buku berhasil.");</script>';
+                  echo '<script>alert("peminjaman buku berhasil.");location.href="index.php"</script>';
                 } else {
                   echo '<script>alert("peminjaman buku gagal.");</script>';
                 }
@@ -274,7 +278,7 @@ include "../koneksi.php";
           <div class="modal-body">
             <form action="" method="post">
               <?php
-              if (isset($_POST['submit'])) {
+              if (isset($_POST['submit_ulasan'])) {
                 $id_buku = $_POST['id_buku'];
                 $id_user = $_SESSION['user']['id_user'];
                 $ulasan = $_POST['ulasan'];
@@ -282,7 +286,7 @@ include "../koneksi.php";
                 $query = mysqli_query($koneksi, "INSERT INTO ulasan (id_buku, id_user, ulasan, rating) VALUES ('$id_buku', '$id_user', '$ulasan', '$rating')");
 
                 if ($query) {
-                  echo '<script>alert("tambah ulasan berhasil.");location.href="buku_detail.php"</script>';
+                  echo '<script>alert("tambah ulasan berhasil.");location.href="index.php"</script>';
                 } else {
                   echo '<script>alert("tambah ulasan gagal.");</script>';
                 }
@@ -313,24 +317,30 @@ include "../koneksi.php";
               <div class="row mb-3">
                 <div class="col-md-2">Rating</div>
                 <div class="col-md-8">
+
                   <select name="rating" class="form-control">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
+                    <?php
+                    // Loop untuk menampilkan opsi rating dalam bentuk bintang
+                    for ($i = 1; $i <= 10; $i++) {
+                      $selected = ($i == $rating) ? 'selected' : ''; // Tandai rating yang dipilih
+                      echo '<option value="' . $i . '" ' . $selected . '>';
+                      // Tampilkan karakter unicode bintang penuh atau kosong sesuai dengan nilai rating
+                      for ($j = 1; $j <= $i; $j++) {
+                        echo '★'; // karakter bintang penuh (U+2605)
+                      }
+                      for ($k = $i + 1; $k <= 10; $k++) {
+                        echo '☆'; // karakter bintang kosong (U+2606)
+                      }
+                      echo '</option>';
+                    }
+                    ?>
                   </select>
                 </div>
               </div>
 
               <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary " name="submit" value="submit">Simpan</button>
+                <button type="submit" class="btn btn-primary " name="submit_ulasan">Simpan</button>
               </div>
           </div>
           </form>
@@ -338,7 +348,6 @@ include "../koneksi.php";
       </div>
     </div>
   </main><!-- End #main -->
-
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
 
@@ -346,47 +355,53 @@ include "../koneksi.php";
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-12 text-center">
-            <h4>Komentar</h4>
+            <h4>Ulasan</h4>
           </div>
           <?php
           $query = "SELECT * FROM ulasan 
-          LEFT JOIN user ON user.id_user = ulasan.id_user 
-          LEFT JOIN buku ON buku.id_buku = ulasan.id_buku 
-          WHERE ulasan.id_buku = '$id_buku'";
+      LEFT JOIN user ON user.id_user = ulasan.id_user 
+      LEFT JOIN buku ON buku.id_buku = ulasan.id_buku 
+      WHERE ulasan.id_buku = '$id_buku' ORDER BY id_ulasan DESC";
           $result = mysqli_query($koneksi, $query);
           ?>
 
-          <ol class="list-group list-group-numbered ">
-            <?php
-            while ($data = mysqli_fetch_array($result)) {
-              ?>
-              <li class="list-group-item d-flex justify-content-between align-items-start">
-                <div class="ms-2 me-auto">
-                  <div class="fw-bold">
-                    <?php echo $data['nama']; ?>
-                  </div>
-                  <?php echo $data['ulasan']; ?>
-                </div>
-                <p class="p-1 align-items-center">
-                  rating
-                </p>
-                <span class="badge bg-primary rounded-pill">
-                  <?php echo $data['rating']; ?>
-                </span>
-              </li>
+          <?php if (mysqli_num_rows($result) > 0) { ?>
+            <ol class="list-group list-group-numbered ">
               <?php
-            }
-            ?>
-          </ol>
-          <!-- <div class="col-lg-6">
-            <form action="" method="post">
-              <label class="form-label">Komentar</label>
-              <textarea class="form-control" type="text" name="ulasan"></textarea>
-            </form>
-          </div> -->
+              while ($data = mysqli_fetch_array($result)) {
+                ?>
+                <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto">
+                    <div class="fw-bold">
+                      <?php echo $data['nama']; ?>
+                    </div>
+                    <?php echo $data['ulasan']; ?>
+                  </div>
+                  <div class="badge bg-primary rounded-pill p-2" style="color: yellow;">
+                    <?php
+                    $rating = $data['rating'];
+
+                    // Loop untuk menampilkan ikon bintang sesuai dengan nilai rating
+                    for ($i = 1; $i <= 10; $i++) {
+                      $iconClass = ($i <= $rating) ? 'fas fa-star' : 'far fa-star';
+                      echo '<i class="' . $iconClass . '"></i>';
+                    }
+                    ?>
+                  </div>
+                </li>
+                <?php
+              }
+              ?>
+            </ol>
+          <?php } else { ?>
+            <div class="alert alert-warning text-center" style="font-size: 15px;" role="alert">
+              Tidak ada ulasan.
+            </div>
+          <?php } ?>
         </div>
       </div>
     </div>
+
 
     <div class="footer-top">
       <div class="container">
@@ -410,7 +425,12 @@ include "../koneksi.php";
           <div class="col-lg-2 col-6 footer-links">
             <h4>Useful Links</h4>
             <ul>
-              <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
+              <li>
+                <i class="bi bi-chevron-right"></i>
+                <a href="#">
+                  Home
+                </a>
+              </li>
               <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
               <li><i class="bi bi-chevron-right"></i> <a href="#">daftar buku</a></li>
               <li><i class="bi bi-chevron-right"></i> <a href="#">Contack</a></li>

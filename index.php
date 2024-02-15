@@ -1,7 +1,7 @@
 <?php
 include "koneksi.php";
 if (!isset($_SESSION['user'])) {
-    header('location:./peminjam');
+    header('location:./home');
 }
 
 ?>
@@ -80,7 +80,6 @@ if (!isset($_SESSION['user'])) {
                         <?php
                         if ($_SESSION['user']['level'] == 'admin') {
                             ?>
-                            <a class="collapse-item" href="tambah_user.php">Tambah User</a>
                             <a class="collapse-item" href="logout.php">Logout</a>
                             <a class="collapse-item" href="?page=user">User</a>
                             <?php
@@ -95,7 +94,7 @@ if (!isset($_SESSION['user'])) {
                             <?php
                         }
                         ?>
-                        <a href="peminjam" class="collapse-item">View Web</a>
+                        <a href="home" class="collapse-item">View Web</a>
 
                     </div>
                 </div>

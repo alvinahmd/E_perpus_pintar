@@ -16,9 +16,9 @@
               $deskripsi = $_POST['deskripsi'];
               $query = mysqli_query($koneksi, "INSERT INTO buku (id_kategori, judul, penulis, penerbit, tahun_terbit, stock, deskripsi) VALUES ('$id_kategori', '$judul', '$penulis', '$penerbit', '$tahun_terbit', '$stock_buku', '$deskripsi')");
               if ($query) {
-                echo '<script>alert("tambah data berhasil.");</script>';
+                echo '<script>alert("tambah buku berhasil.");location.href="index.php"</script>';
               } else {
-                echo '<script>alert("tambah data gagal.");</script>';
+                echo '<script>alert("tambah buku gagal.");</script>';
               }
             }
             ?>

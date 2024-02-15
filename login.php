@@ -43,14 +43,14 @@ include "koneksi.php";
                         $cek = mysqli_num_rows($data);
                         if ($cek > 0) {
                             $userData = mysqli_fetch_array($data);
-                        
+
                             // Menyimpan informasi user ke dalam session
                             $_SESSION['user'] = $userData;
-                        
+
                             // Menentukan halaman tujuan berdasarkan peran pengguna
                             if ($userData['level'] == 'peminjam') {
                                 // Jika peran adalah peminjam, arahkan ke halaman peminjam
-                                echo '<script>alert("Selamat datang, login berhasil"); location.href="peminjam"</script>';
+                                echo '<script>alert("Selamat datang, login berhasil"); location.href="home"</script>';
                             } elseif ($userData['level'] == 'admin' || $userData['level'] == 'petugas') {
                                 // Jika peran adalah admin atau petugas, arahkan ke halaman index.php
                                 echo '<script>alert("Selamat datang, login berhasil"); location.href="index.php"</script>';

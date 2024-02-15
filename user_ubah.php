@@ -114,9 +114,6 @@
                     </div>
                   </form>
                 </div>
-                <div class="card-footer text-center py-3">
-                  <a style="text-decoration:none;" class="small mb-1">Copyright &copy; Arkan Arya Reza Maulana 2024</a>
-                </div>
               </div>
             </div>
           </div>

@@ -48,7 +48,7 @@ include "../koneksi.php";
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
       <a href="index.php" class="logo d-flex align-items-center">
-        <img src="assets/img/bg.png" alt="" class="img-fluid" style="width: 70px;">
+        <img src="assets/img/logo.png" alt="" class="img-fluid" style="width: 70px;">
         <span>E </span>
         <span>Perpus</span>
       </a>
@@ -151,7 +151,7 @@ include "../koneksi.php";
 
           <div class="row gy-4 portfolio-container" data-aos="fade-up" data-aos-delay="200">
             <?php
-            $query = mysqli_query($koneksi, "SELECT*FROM buku LEFT JOIN kategori on buku.id_kategori = kategori.id_kategori");
+            $query = mysqli_query($koneksi, "SELECT*FROM buku LEFT JOIN kategori on buku.id_kategori = kategori.id_kategori LIMIT 6");
             while ($data = mysqli_fetch_array($query)) {
               ?>
               <div class="col-lg-4 col-md-6 portfolio-item filter-app">
@@ -167,15 +167,24 @@ include "../koneksi.php";
                       <a href="buku_detail.php?id_buku=<?= $data['id_buku'] ?>" title="More Details"><i
                           class="bi bi-link"></i></a>
                     </div>
+
                   </div>
                 </div>
+
               </div>
+
               <?php
             }
             ?>
 
           </div>
-
+          <section class="text-center text-lg-start section-header">
+            <a href="buku.php"
+              class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
+              <span>View More</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </section>
         </div>
 
       </section><!-- End Portfolio Section -->
@@ -204,8 +213,8 @@ include "../koneksi.php";
                 <div class="col-md-6">
                   <div class="info-box">
                     <i class="bi bi-telephone"></i>
-                    <h3>Call Us</h3>
-                    <p>+1 5589 55488 55<br>+1 6678 254445 41</p>
+                    <h3>Contack</h3>
+                    <p>+ 62 8884845979</p>
                   </div>
                 </div>
                 <div class="col-md-6">
@@ -269,28 +278,11 @@ include "../koneksi.php";
 
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
-
-    <div class="footer-newsletter">
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-lg-12 text-center">
-            <h4>Our Newsletter</h4>
-            <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
-          </div>
-          <div class="col-lg-6">
-            <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <div class="footer-top">
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-info">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a href="#" class="logo d-flex align-items-center">
               <img src="assets/img/logo.png" alt="">
               <span>E Perpus</span>
             </a>
