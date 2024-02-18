@@ -20,7 +20,7 @@
                       </div>';
               } else {
                 echo '<div class="alert alert-danger" role="alert">
-                        Ubah Gagal menambahkan ulasan.
+                        Ubah Ulasan Gagal.
                       </div>';
               }
             }

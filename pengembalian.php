@@ -9,13 +9,12 @@
             $id = $_GET['id'];
             if (isset($_POST['submit'])) {
               $id_buku = $_POST['id_buku'];
-              $id_user = $_SESSION['user']['id_user'];
               $tanggal_peminjaman = $_POST['tanggal_peminjaman'];
               $total_pinjam = $_POST['total_pinjam'];
               $tanggal_pengembalian = $_POST['tanggal_pengembalian'];
               $status_peminjaman = $_POST['status_peminjaman'];
 
-              $query = mysqli_query($koneksi, "UPDATE peminjaman SET id_buku='$id_buku', id_user='$id_user', tanggal_peminjaman='$tanggal_peminjaman', tanggal_pengembalian='$tanggal_pengembalian', total_pinjam='$total_pinjam', status_peminjaman='$status_peminjaman' WHERE id_peminjaman=$id");
+              $query = mysqli_query($koneksi, "UPDATE peminjaman SET id_buku='$id_buku',  tanggal_peminjaman='$tanggal_peminjaman', tanggal_pengembalian='$tanggal_pengembalian', total_pinjam='$total_pinjam', status_peminjaman='$status_peminjaman' WHERE id_peminjaman=$id");
 
               // Mengambil stok dari buku
               $stock_saat_ini = mysqli_query($koneksi, "SELECT * FROM buku WHERE id_buku='$id_buku'");
@@ -37,7 +36,10 @@
               if ($query && $kembalikan_stock) {
                 echo '<div class="alert alert-success" role="alert">
                 Pengembalian buku berhasil
-              </div>';
+            </div>';
+                echo '<script>
+                location.href="index.php";
+            </script>';
               } else {
                 echo '<div class="alert alert-danger" role="alert">
                 Pengembalian buku gagal

@@ -25,7 +25,7 @@
               <th>Buku</th>
               <th>Ulasan</th>
               <th>Rating</th>
-
+              <th>Balasan Petugas</th>
               <th>Aksi</th>
 
             </tr>
@@ -89,6 +89,9 @@
                     ?>
                   </td>
                   <td>
+                    <?php echo $data['balasan'] ?>
+                  </td>
+                  <td class="col-2">
                     <?php
                     // Hanya tampilkan tombol "Ubah" dan "Hapus" untuk level 'admin' dan 'petugas'
                     if ($level_user == 'peminjam') {
@@ -101,6 +104,7 @@
                       ?>
                       <a onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini ??')"
                         href="?page=ulasan_hapus&&id=<?php echo $data['id_ulasan']; ?>" class="btn btn-danger">Hapus</a>
+                      <a href="?page=balas&&id=<?php echo $data['id_ulasan']; ?>" class="btn btn-primary">Balas</a>
                       <?php
                     }
                     ?>

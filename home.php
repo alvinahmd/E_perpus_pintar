@@ -277,8 +277,8 @@
                                 <th>Buku</th>
                                 <th>Tanggal Peminjaman</th>
                                 <th>Tanggal pengembalian</th>
+                                <th>Total pinjam</th>
                                 <th>Status Peminjaman</th>
-
                                 <th>Aksi</th>
                             </tr>
                         </thead>
@@ -289,6 +289,7 @@
                                 <th>Buku</th>
                                 <th>Tanggal Peminjaman</th>
                                 <th>Tanggal pengembalian</th>
+                                <th>Total pinjam</th>
                                 <th>Status Peminjaman</th>
                                 <th>Aksi</th>
                             </tr>
@@ -319,13 +320,16 @@
                                         <?php echo $data['tanggal_pengembalian']; ?>
                                     </td>
                                     <td>
+                                        <?php echo $data['total_pinjam']; ?>
+                                    </td>
+                                    <td>
                                         <?php echo $data['status_peminjaman']; ?>
                                     </td>
                                     <td class="col-3">
                                         <?php
                                         if ($data['status_peminjaman'] != 'dikembalikan') {
                                             ?>
-                                            <a href="?page=peminjaman_ubah&&id=<?php echo $data['id_peminjaman']; ?>"
+                                            <a href="?page=pengembalian&&id=<?php echo $data['id_peminjaman']; ?>"
                                                 class="btn btn-info">Kembali</a>
                                             <a onclick="return confirm('Apakah Anda Yakin Ingin Menghapus Data Ini ??')"
                                                 href="?page=peminjaman_hapus&&id=<?php echo $data['id_kategori']; ?>"

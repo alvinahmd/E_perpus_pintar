@@ -8,7 +8,7 @@ include "../koneksi.php";
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>E perpus</title>
+  <title>Anaya_Perpus</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -49,8 +49,8 @@ include "../koneksi.php";
 
       <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="" class="img-fluid" style="width: 70px;">
-        <span>E </span>
-        <span>Perpus</span>
+        <span>Anaya </span>
+        <span>_Perpus</span>
       </a>
 
       <nav id="navbar" class="navbar">
@@ -83,7 +83,7 @@ include "../koneksi.php";
     <div class="container">
       <div class="row">
         <div class="col-lg-6 d-flex flex-column justify-content-center">
-          <h1 data-aos="fade-up">E perpus </h1>
+          <h1 data-aos="fade-up">Anaya_Perpus </h1>
           <h2 data-aos="fade-up" data-aos-delay="400">Temukan dunia pengetahuan di ujung jari Anda. Jelajahi koleksi
             pustaka online kami yang kaya dan nikmati akses tanpa batas ke berbagai sumber pengetahuan.
           </h2>
@@ -115,19 +115,21 @@ include "../koneksi.php";
           <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
             <div class="content">
               <h3>Who We Are</h3>
-              <h2>E-Perpus adalah platform perpustakaan daring yang didedikasikan untuk memberikan akses mudah dan cepat
+              <h2>Anaya_Perpus adalah platform perpustakaan daring yang didedikasikan untuk memberikan akses mudah dan
+                cepat
                 ke dunia literasi.</h2>
               <p>
                 Kami menyediakan koleksi digital yang luas, mulai dari buku elektronik hingga sumber
                 daya multimedia.
               </p>
               <div class="text-center text-lg-start">
-                <a href="#"
+                <a href="<?php echo isset($_SESSION['user']) ? '#' : '../login.php'; ?>"
                   class="btn-read-more d-inline-flex align-items-center justify-content-center align-self-center">
                   <span>Read More</span>
                   <i class="bi bi-arrow-right"></i>
                 </a>
               </div>
+
             </div>
           </div>
 
@@ -284,7 +286,7 @@ include "../koneksi.php";
           <div class="col-lg-5 col-md-12 footer-info">
             <a href="#" class="logo d-flex align-items-center">
               <img src="assets/img/logo.png" alt="">
-              <span>E Perpus</span>
+              <span>Anaya_Perpus</span>
             </a>
             <p>E-Perpus adalah platform perpustakaan daring yang didedikasikan untuk memberikan akses mudah dan cepat ke
               dunia literasi.
@@ -324,7 +326,7 @@ include "../koneksi.php";
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>E perpus</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Anaya_Perpus</span></strong>. All Rights Reserved
       </div>
     </div>
   </footer><!-- End Footer -->

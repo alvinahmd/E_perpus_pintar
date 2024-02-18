@@ -47,20 +47,59 @@ include "koneksi.php";
                     $level = 'peminjam';
                     $password = md5($_POST['password']);
 
-                    $insert = mysqli_query($koneksi, "INSERT INTO user(nama, email, alamat, no_telepon, username, password,level)VALUES('$nama','$email','$alamat','$no_telepon','$username','$password','$level')");
-                    if ($insert) {
-                      echo '<script>alert("Selamat, register berhasil. Silahkan Login"); location.href="login.php"</script>';
+                    // Validasi email agar hanya domain "gmail.com" yang diterima
+                    if (filter_var($email, FILTER_VALIDATE_EMAIL) && strpos($email, '@gmail.com') !== false) {
+                      // Validasi nomor telepon (hanya angka yang diterima, minimal 10 digit)
+                      if (ctype_digit($no_telepon) && strlen($no_telepon) >= 10) {
+                        // Validasi alamat (minimal 5 karakter)
+                        if (strlen($alamat) >= 5) {
+                          // Validasi agar tidak ada dua digit yang sama dan tidak lebih dari 10 digit yang sama
+                          if (!preg_match('/(\d)\1{9,}/', $no_telepon)) {
+                            // Semua validasi berhasil, lanjutkan dengan penyisipan data ke database
+                            $insert = mysqli_query($koneksi, "INSERT INTO user(nama, email, alamat, no_telepon, username, password, level) VALUES('$nama','$email','$alamat','$no_telepon','$username','$password','$level')");
+
+                            if ($insert) {
+                              echo '<div class="alert alert-success" role="alert">
+                                      Selamat, registrasi berhasil. Silakan login
+                                    </div>';
+                            } else {
+                              echo '<div class="alert alert-danger" role="alert">
+                                      Registrasi gagal, silakan ulangi kembali
+                                    </div>';
+                            }
+                          } else {
+                            // Nomor telepon memiliki dua digit yang sama atau lebih dari 10 digit yang sama
+                            echo '<div class="alert alert-danger" role="alert">
+                                Mohon masukkan nomor telepon yang tidak memiliki dua digit yang sama atau lebih dari 10 digit yang sama
+                              </div>';
+                          }
+                        } else {
+                          // Validasi alamat tidak memenuhi syarat
+                          echo '<div class="alert alert-danger" role="alert">
+                              Mohon masukkan alamat yang valid (minimal 5 karakter)
+                            </div>';
+                        }
+                      } else {
+                        // Validasi nomor telepon tidak memenuhi syarat
+                        echo '<div class="alert alert-danger" role="alert">
+                          Mohon masukkan nomor telepon yang valid (hanya angka, minimal 10 digit)
+                        </div>';
+                      }
                     } else {
-                      echo '<script>alert("Register gagal, silahkan ulangi kembali");</script>';
+                      // Email tidak valid
+                      echo '<div class="alert alert-danger" role="alert">
+                    Mohon masukkan alamat Gmail yang valid
+                </div>';
                     }
                   }
                   ?>
+
                   <form method="post">
                     <div class="input-group form-group">
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                       </div>
-                      <input type="text" id="inputNama" class="form-control" name="nama"
+                      <input required type="text" id="inputNama" class="form-control" name="nama"
                         placeholder="masukkan name anda">
 
                     </div>
@@ -68,7 +107,7 @@ include "koneksi.php";
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-user"></i></span>
                       </div>
-                      <input type="text" id="inputUsername" class="form-control" name="username"
+                      <input required type="text" id="inputUsername" class="form-control" name="username"
                         placeholder="masukkan username anda">
 
                     </div>
@@ -76,7 +115,7 @@ include "koneksi.php";
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-envelope"></i></span>
                       </div>
-                      <input type="text" id="inputemail" class="form-control" name="email"
+                      <input required type="text" id="inputemail" class="form-control" name="email"
                         placeholder="masukkan email anda">
 
                     </div>
@@ -84,7 +123,7 @@ include "koneksi.php";
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-phone"></i></span>
                       </div>
-                      <input type="text" id="inputno_telepon" class="form-control" name="no_telepon"
+                      <input required type="text" id="inputno_telepon" class="form-control" name="no_telepon"
                         placeholder="masukkan no_telepon anda">
 
                     </div>
@@ -92,7 +131,7 @@ include "koneksi.php";
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-location-dot"></i></span>
                       </div>
-                      <textarea type="text" id="inputalamat" class="form-control" name="alamat"
+                      <textarea required type="text" id="inputalamat" class="form-control" name="alamat"
                         placeholder="masukkan alamat anda"></textarea>
 
                     </div>
@@ -100,7 +139,7 @@ include "koneksi.php";
                       <div class="input-group-prepend">
                         <span class="input-group-text"><i class="fas fa-key"></i></span>
                       </div>
-                      <input type="password" class="form-control" id="inputPassword" name="password"
+                      <input type="password" required class="form-control" id="inputPassword" name="password"
                         placeholder="masukkan password anda">
                     </div>
                     <!-- <div class="form-group">

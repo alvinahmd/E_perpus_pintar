@@ -153,9 +153,9 @@ include "../koneksi.php";
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Pinjam Buku
               </button>
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
+              <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1">
                 Komentar
-              </button>
+              </button> -->
 
               <?php
             }
@@ -187,23 +187,55 @@ include "../koneksi.php";
                 $total_pinjam = $_POST['total_pinjam'];
                 $status_peminjaman = $_POST['status_peminjaman'];
 
-                $query = mysqli_query($koneksi, "INSERT INTO peminjaman (id_buku, id_user, tanggal_peminjaman, tanggal_pengembalian, total_pinjam, status_peminjaman) VALUES ('$id_buku', '$id_user', '$tanggal_peminjaman', '$tanggal_pengembalian', '$total_pinjam', '$status_peminjaman')");
+                // Convert dates to timestamps for comparison
+                $timestamp_peminjaman = strtotime($tanggal_peminjaman);
+                $timestamp_pengembalian = strtotime($tanggal_pengembalian);
 
-                $stock_saat_ini = mysqli_query($koneksi, "select * from buku where id_buku='$id_buku' ");
-                $stocknya = mysqli_fetch_array($stock_saat_ini);
-                $stock = $stocknya['stock'];
-                $new_stock = $stock - $total_pinjam;
+                // Validasi tanggal pengembalian tidak boleh sebelum tanggal peminjaman
+                if ($timestamp_pengembalian >= $timestamp_peminjaman) {
+                  // Validasi total pinjam tidak melebihi stok
+                  $stock_saat_ini = mysqli_query($koneksi, "SELECT stock FROM buku WHERE id_buku='$id_buku' ");
+                  $stocknya = mysqli_fetch_array($stock_saat_ini);
+                  $stock = $stocknya['stock'];
 
-                $kurangi_stock = mysqli_query($koneksi, "UPDATE buku SET stock='$new_stock' where id_buku='$id_buku'");
+                  if ($total_pinjam <= $stock) {
+                    // Lanjutkan dengan penyisipan data ke database
+                    $query = mysqli_query($koneksi, "INSERT INTO peminjaman (id_buku, id_user, tanggal_peminjaman, tanggal_pengembalian, total_pinjam, status_peminjaman) VALUES ('$id_buku', '$id_user', '$tanggal_peminjaman', '$tanggal_pengembalian', '$total_pinjam', '$status_peminjaman')");
 
-                if ($query && $kurangi_stock) {
-                  echo '<script>alert("peminjaman buku berhasil.");location.href="index.php"</script>';
+                    if ($query) {
+                      // Update stok hanya jika peminjaman berhasil
+                      $new_stock = $stock - $total_pinjam;
+
+                      // Pastikan stok tidak menjadi negatif
+                      $new_stock = max(0, $new_stock);
+
+                      $kurangi_stock = mysqli_query($koneksi, "UPDATE buku SET stock='$new_stock' WHERE id_buku='$id_buku'");
+
+                      if ($kurangi_stock) {
+                        echo '<script>alert("Peminjaman buku berhasil.");location.href="index.php";</script>';
+                      } else {
+                        // Peminjaman berhasil, tetapi ada masalah dengan pengurangan stok
+                        echo '<script>alert("Maaf, terjadi kesalahan. Peminjaman buku gagal.");</script>';
+                      }
+                    } else {
+                      // Peminjaman gagal
+                      echo '<script>alert("Maaf, terjadi kesalahan. Peminjaman buku gagal.");</script>';
+                    }
+                  } else {
+                    // Total pinjam melebihi stok
+                    echo '<script>alert("Maaf, total pinjaman melebihi stok buku yang tersedia.");</script>';
+                  }
                 } else {
-                  echo '<script>alert("peminjaman buku gagal.");</script>';
+                  // Tanggal pengembalian sebelum tanggal peminjaman
+                  echo '<script>alert("Tanggal pengembalian tidak boleh sebelum tanggal peminjaman.");</script>';
                 }
               }
-
               ?>
+
+
+
+
+
               <div class="row mb-3">
                 <div class="col-md-5">Buku</div>
                 <div class="col-md-7">
@@ -268,7 +300,7 @@ include "../koneksi.php";
     </div>
 
     <!-- modal ulasan -->
-    <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -346,7 +378,7 @@ include "../koneksi.php";
           </form>
         </div>
       </div>
-    </div>
+    </div> -->
   </main><!-- End #main -->
   <!-- ======= Footer ======= -->
   <footer id="footer" class="footer">
@@ -377,6 +409,19 @@ include "../koneksi.php";
                     </div>
                     <?php echo $data['ulasan']; ?>
                   </div>
+                  <?php
+                  // Memeriksa apakah terdapat balasan dari admin
+                  $balasanAdmin = $data['balasan'];
+
+                  if (!empty($balasanAdmin)) {
+                    // Menampilkan balasan admin
+                    echo '<div class="list-group-item bg-light">';
+                    echo '<div class="fw-bold">Admin:</div>';
+                    echo $balasanAdmin;
+                    echo '</div>';
+                  }
+                  ?>
+
                   <div class="badge bg-primary rounded-pill p-2" style="color: yellow;">
                     <?php
                     $rating = $data['rating'];
@@ -389,6 +434,7 @@ include "../koneksi.php";
                     ?>
                   </div>
                 </li>
+
                 <?php
               }
               ?>

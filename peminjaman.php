@@ -30,7 +30,7 @@
               <th>Tanggal Peminjaman</th>
               <th>Tanggal pengembalian</th>
               <th>Status Peminjaman</th>
-              <!-- <th>Aksi</th> -->
+              <th>Komentar</th>
             </tr>
           </thead>
           <tfoot>
@@ -42,7 +42,7 @@
               <th>Tanggal Peminjaman</th>
               <th>Tanggal pengembalian</th>
               <th>Status Peminjaman</th>
-              <!-- <th>Aksi</th> -->
+              <th>Komentar</th>
             </tr>
           </tfoot>
           <tbody>
@@ -79,15 +79,21 @@
                 <td>
                   <?php echo $data['status_peminjaman']; ?>
                 </td>
-                <!-- <td> -->
-                <?php
-                if ($data['status_peminjaman'] != 'dikembalikan') {
-                  ?>
-                  <!-- <a href="?page=pengembalian&&id=<?php echo $data['id_peminjaman']; ?>" class="btn btn-info">Kembali</a> -->
+                <td>
                   <?php
-                }
-                ?>
-                <!-- </td> -->
+
+
+                  // Cek status peminjaman
+                  if ($data['status_peminjaman'] == 'dikembalikan') {
+                    ?>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                      data-buku-id="<?php echo $data['id_buku']; ?>">
+                      Komentar
+                    </button>
+                    <?php
+                  }
+                  ?>
+                </td>
               </tr>
               <?php
             }
@@ -101,8 +107,97 @@
 </div>
 
 
-<!-- end modal tambah peminjaman -->
+<!-- modal ulasan -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabe" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Tambahkan ulasan Buku</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+          <?php
+          if (isset($_POST['submit_ulasan'])) {
+            $id_buku = $_POST['id_buku'];
+            $id_user = $_SESSION['user']['id_user'];
+            $ulasan = $_POST['ulasan'];
+            $rating = $_POST['rating'];
 
+            // Cek apakah pengguna sudah memberikan komentar
+            $queryCekUlasan = mysqli_query($koneksi, "SELECT * FROM ulasan WHERE id_buku='$id_buku' AND id_user='$id_user'");
+            $jumlahUlasan = mysqli_num_rows($queryCekUlasan);
+
+            if ($jumlahUlasan > 0) {
+              echo '<script>alert("Anda sudah memberikan komentar untuk buku ini.");</script>';
+            } else {
+              // Simpan data ulasan
+              $query = mysqli_query($koneksi, "INSERT INTO ulasan (id_buku, id_user, ulasan, rating) VALUES ('$id_buku', '$id_user', '$ulasan', '$rating')");
+
+              if ($query) {
+                echo '<script>alert("Tambah ulasan berhasil.");location.href="index.php"</script>';
+              } else {
+                echo '<script>alert("Tambah ulasan gagal.");</script>';
+              }
+            }
+          }
+
+          ?>
+          <div class="row mb-3">
+            <div class="col-md-2">Buku</div>
+            <div class="col-md-8">
+              <select name="id_buku" class="form-control" id="ulasanBukuSelect">
+                <?php
+                $queryBuku = mysqli_query($koneksi, "SELECT buku.id_buku, buku.judul FROM buku
+               JOIN peminjaman ON buku.id_buku = peminjaman.id_buku
+               WHERE peminjaman.id_user = '$id_user'
+               AND peminjaman.status_peminjaman = 'dikembalikan'"); // Memilih buku yang sudah dipinjam
+                while ($buku = mysqli_fetch_array($queryBuku)) {
+                  echo '<option value="' . $buku['id_buku'] . '">' . $buku['judul'] . '</option>';
+                }
+                ?>
+              </select>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-2">Ulasan</div>
+            <div class="col-md-8">
+              <textarea type="text" rows="5" class="form-control" name="ulasan"></textarea>
+            </div>
+          </div>
+          <div class="row mb-3">
+            <div class="col-md-2">Rating</div>
+            <div class="col-md-8">
+
+              <select name="rating" class="form-control">
+                <?php
+                // Loop untuk menampilkan opsi rating dalam bentuk bintang
+                for ($i = 1; $i <= 10; $i++) {
+                  $selected = ($i == $rating) ? 'selected' : ''; // Tandai rating yang dipilih
+                  echo '<option value="' . $i . '" ' . $selected . '>';
+                  // Tampilkan karakter unicode bintang penuh atau kosong sesuai dengan nilai rating
+                  for ($j = 1; $j <= $i; $j++) {
+                    echo '★'; // karakter bintang penuh (U+2605)
+                  }
+                  for ($k = $i + 1; $k <= 10; $k++) {
+                    echo '☆'; // karakter bintang kosong (U+2606)
+                  }
+                  echo '</option>';
+                }
+                ?>
+              </select>
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary " name="submit_ulasan">Simpan</button>
+          </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 <!-- modal peminjaman Ubah -->
 </div>
 

@@ -32,7 +32,7 @@ include "../koneksi.php";
 
       <a href="index.php" class="logo d-flex align-items-center">
         <img src="assets/img/logo.png" alt="" class="img-fluid" style="width: 70px;">
-        <span>E </span>
+        <span>Anaya_ </span>
         <span>Perpus</span>
       </a>
 
@@ -118,7 +118,7 @@ include "../koneksi.php";
           <div class="col-lg-5 col-md-12 footer-info">
             <a href="#" class="logo d-flex align-items-center">
               <img src="assets/img/logo.png" alt="">
-              <span>E Perpus</span>
+              <span>Anaya_Perpus</span>
             </a>
             <p>E-Perpus adalah platform perpustakaan daring yang didedikasikan untuk memberikan akses mudah dan cepat ke
               dunia literasi.
@@ -158,7 +158,7 @@ include "../koneksi.php";
 
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>E perpus</span></strong>. All Rights Reserved
+        &copy; Copyright <strong><span>Anaya_Perpus</span></strong>. All Rights Reserved
       </div>
     </div>
   </footer><!-- End Footer -->

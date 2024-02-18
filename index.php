@@ -17,7 +17,7 @@ if (!isset($_SESSION['user'])) {
     <meta name="author" content="">
     <link rel="icon" href="img/book-open.svg" type="image/svg+xml">
 
-    <title>UKK Perpustakaan Alvin </title>
+    <title>Anaya_Perpus</title>
 
     <!-- Custom fonts for this template-->
     <!-- Custom fonts for this template-->
@@ -45,7 +45,7 @@ if (!isset($_SESSION['user'])) {
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-book-open"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">E Perpus</div>
+                <div class="sidebar-brand-text mx-3">Anaya_Perpus</div>
             </a>
 
             <!-- Divider -->
